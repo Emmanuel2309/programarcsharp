@@ -1,1 +1,28 @@
 
+using System;
+using System.Linq;
+using System.Xml.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        // Cargar el archivo XML
+        XDocument doc = XDocument.Load("datos.xml");
+
+        // Consulta utilizando LINQ
+        var query = from empleado in doc.Descendants("Empleado")
+                    select new
+                    {
+                        Id = empleado.Element("Id").Value,
+                        Nombre = empleado.Element("Nombre").Value,
+                        Salario = empleado.Element("Salario").Value
+                    };
+
+        // Mostrar los resultados
+        foreach (var empleado in query)
+        {
+            Console.WriteLine($"ID: {empleado.Id}, Nombre: {empleado.Nombre}, Salario: {empleado.Salario}");
+        }
+    }
+}
